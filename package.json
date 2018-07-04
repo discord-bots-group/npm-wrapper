@@ -1,0 +1,10 @@
+{
+	"name": "discordbots.group",
+	"version": "5.9.9",
+	"description": "Libary for sending infomation to the discordbots.group api.",
+	"main": "src/index.js",
+	"author": "Jacob Rayner",
+	"dependencies": {
+		"snekfetch": "^3.6.4"
+	}
+}
