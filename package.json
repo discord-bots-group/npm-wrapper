@@ -5,6 +5,6 @@
 	"main": "src/index.js",
 	"author": "Jacob Rayner",
 	"dependencies": {
-		"snekfetch": "^3.6.4"
+		"snekfetch": "^4.0.4"
 	}
 }
