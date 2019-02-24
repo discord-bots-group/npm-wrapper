@@ -1,5 +1,5 @@
 {
-  "name": "discord-bots-group",
+  "name": "discordbots.group",
   "version": "1.0.0",
   "description": "A simple library for interacting with the Discord Bots Group API.",
   "main": "src/Client.js",
