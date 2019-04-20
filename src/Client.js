@@ -116,15 +116,8 @@ class Client {
         if (typeof user != 'string') throw new TypeError('user must be a string');
         return new Promise((resolve, reject) => {
             jaczfetch.get(this._baseURL + '/bot/' + this._id + '/upvotes').set('Authorization', this._token).then((votes) => {
-                votes.body.upvotes.forEach(vote => {
-                    console.log(vote.user)
-                    if (vote.user == user && vote.timestamp > Date.now() - 86400000) {
-                        resolve(true)
-                    }
-                })
-                setTimeout(function(){
-                    resolve(false);
-                }, 100);
+                if (votes.body.upvotes.filter((u) => u.user === user && u.timestamp > Date.now() - 86400000).length > 0) return resolve(true);
+                resolve(false);
             }).catch((e) => {
                 reject(new Error(e));
             })
