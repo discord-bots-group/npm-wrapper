@@ -8,7 +8,7 @@ class Client {
 
         if (typeof this._id != 'string') throw new TypeError('id must be a string');
 
-        this._baseURL = 'https://discordbots.group/api';
+        this._baseURL = 'https://api.discordbots.group/v1';
     }
 
     /**
@@ -36,22 +36,6 @@ class Client {
         return new Promise((resolve, reject) => {
             jaczfetch.get(this._baseURL + '/bots').then((bots) => {
                 resolve(bots.body);
-            }).catch((e) => {
-                reject(new Error(e));
-            })
-        })
-    }
-
-    /**
-     * Returns all users on the site.
-     * @memberOf Client
-     * @returns {Promise} The returned data.
-     * */
-
-    getUsers() {
-        return new Promise((resolve, reject) => {
-            jaczfetch.get(this._baseURL + '/users').then((users) => {
-                resolve(users.body);
             }).catch((e) => {
                 reject(new Error(e));
             })
@@ -114,8 +98,8 @@ class Client {
 
     getVotes() {
         return new Promise((resolve, reject) => {
-            jaczfetch.get(this._baseURL + '/bot/' + this._id + '/votes').set('Authorization', this._token).then((votes) => {
-                resolve(votes.body);
+            jaczfetch.get(this._baseURL + '/bot/' + this._id + '/upvotes').set('Authorization', this._token).then((votes) => {
+                resolve(votes.body.upvotes);
             }).catch((e) => {
                 reject(new Error(e));
             })
@@ -128,12 +112,19 @@ class Client {
      * @returns {Promise} The returned data.
      * */
 
-    hasVoted(user) {
+    hasVoted24(user) {
         if (typeof user != 'string') throw new TypeError('user must be a string');
         return new Promise((resolve, reject) => {
-            jaczfetch.get(this._baseURL + '/bot/' + this._id + '/votes').set('Authorization', this._token).then((votes) => {
-                if (votes.body.users.includes(user)) resolve(true);
-                else resolve(false);
+            jaczfetch.get(this._baseURL + '/bot/' + this._id + '/upvotes').set('Authorization', this._token).then((votes) => {
+                votes.body.upvotes.forEach(vote => {
+                    console.log(vote.user)
+                    if (vote.user == user && vote.timestamp > Date.now() - 86400000) {
+                        resolve(true)
+                    }
+                })
+                setTimeout(function(){
+                    resolve(false);
+                }, 100);
             }).catch((e) => {
                 reject(new Error(e));
             })

@@ -46,7 +46,7 @@ client.updateCount(10).then(bot => {
     console.error(e);
 })
 
-client.hasVoted('449653897695461376').then(votes => {
+client.hasVoted24('449653897695461376').then(votes => {
     console.log(votes);
 }).catch((e) => {
     console.error(e);
