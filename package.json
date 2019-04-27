@@ -1,15 +1,22 @@
 {
   "name": "discordbots.group",
-  "version": "1.0.0",
+  "version": "6.0.0",
   "description": "A simple library for interacting with the Discord Bots Group API.",
   "main": "src/Client.js",
   "author": "Jacob Rayner",
   "license": "Apache-2.0",
+  "scripts": {
+    "docs": "jsdoc src/ -R README.md -c .jsdoc.json"
+  },
   "bugs": {
     "url": "https://github.com/discord-bots-group/npm-wrapper/issues"
   },
   "homepage": "https://github.com/discord-bots-group/npm-wrapper#readme",
   "dependencies": {
-    "jaczfetch": "MrJacz/jaczfetch"
+    "jaczfetch": "github:MrJacz/jaczfetch",
+    "ws": "^6.2.1"
+  },
+  "devDependencies": {
+    "toast-jsdoc": "^1.0.2"
   }
 }

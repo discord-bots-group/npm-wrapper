@@ -1,18 +1,24 @@
 const jaczfetch = require('jaczfetch');
+const WebSocket = require('./WebSocket');
 const Error = require('./ErrorHandler');
 
+/**
+ * Creates a new client.
+ * @class Client
+ */
 class Client {
+    /**
+     * @param {String} id The bot id.
+     * @param {String} token The bot token.
+     */
     constructor(id, token) {
         this._id = id;
         this._token = token;
-
         if (typeof this._id != 'string') throw new TypeError('id must be a string');
-
         this._baseURL = 'https://api.discordbots.group/v1';
     }
-
     /**
-     * Gets useful statistics about the list.
+     * Gets useful statistics aboutthe list.
      * @memberOf Client
      * @returns {Promise} The returned data.
      * */
@@ -27,10 +33,10 @@ class Client {
     }
 
     /**
-    * Returns all bots on the site.
-    * @memberOf Client
-    * @returns {Promise} The returned data.
-    * */
+     * Returns all bots on the site.
+     * @memberOf Client
+     * @returns {Promise} The returned data.
+     * */
 
     getBots() {
         return new Promise((resolve, reject) => {
@@ -74,15 +80,14 @@ class Client {
      * Posts server count to the website.
      * @memberOf Client
      * @return {Promise} The returned data.
-     * @param {Number} count The server count.
+     * @param {number | number[]} count The server count, or array of server count as shards.
      */
 
     updateCount(count) {
-        if (typeof count != 'number') throw new TypeError('count must be a number');
-        if (typeof this._token != 'string') throw new TypeError('token must be a string');
-
+        if (typeof count !== 'number' && !Array.isArray(count)) throw new TypeError('count must be a number or array');
+        const data = Array.isArray(count) ? { shards: count } : { server_count: count };
         return new Promise((resolve, reject) => {
-            jaczfetch.post(this._baseURL + '/bot/' + this._id).send({ server_count: count }).set('Authorization', this._token).then((bot) => {
+            jaczfetch.post(this._baseURL + '/bot/' + this._id).send(data).set('Content-Type', 'application/json').set('Authorization', this._token).then((bot) => {
                 resolve(bot.body);
             }).catch((e) => {
                 reject(new Error(e));
@@ -107,7 +112,7 @@ class Client {
     }
 
     /**
-     * Check if a user has voted for the bot
+     * Check if a user has voted for the bot in the past 24 hours.
      * @memberOf Client
      * @returns {Promise} The returned data.
      * */
@@ -123,6 +128,8 @@ class Client {
             })
         })
     }
+
 }
 
 module.exports = Client;
+module.exports.WebSocket = WebSocket;

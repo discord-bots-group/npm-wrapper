@@ -53,5 +53,24 @@ client.hasVoted24('449653897695461376').then(votes => {
 })
 ```
 
+## Example with Gateway
+```js
+const Client = require('discordbots.group');
+const client = new Client.WebSocket({
+    tokens: ['Token 1', 'Token 2', 'Token 3'],
+    reconnect: true,
+    heartbeatInterval: 30
+});
+
+client.on('connected', () => console.log('Successfully connected to Gateway'));
+client.on('disconnected', () => console.log('Disconnected from Gateway'));
+client.on('reconnecting', () => console.log('Reconnecting to Gateway'));
+client.on('error', (errors) => console.error('Errors', errors));
+
+client.on('upvote', (data) => console.log(data));
+client.on('pageView', (data) => console.log(data));
+client.on('heartbeatAck', () => console.log('Heartbeat'));
+```
+
 ## License
 [Apache 2.0 License](https://github.com/discordbots-group/npm-wrapper/blob/master/LICENSE)
