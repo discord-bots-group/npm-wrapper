@@ -4,6 +4,9 @@ A simple library for interacting with the discordbots.group API.
 ## Getting Started
 Simply install by navigating to your project directory then running `npm i discord-bots-group/npm-wrapper`.
 
+## Documentation
+https://discord-bots-group.github.io/npm-wrapper/
+
 ## Example
 
 ```js
